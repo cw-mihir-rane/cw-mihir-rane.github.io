@@ -118,7 +118,7 @@ section{
 }
 
 .about .row-1 .image{
-    flex:1 1 25rem;
+    flex:1 0 25rem;
 }
 
 .about .row-1 .image img{
@@ -413,9 +413,15 @@ section{
 }
 
 @media (max-width:450px){
-
     html{
         font-size: 50%;
     }
-
 }
+
+@media (max-width: 550px) {
+    .navbar{
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 1rem;
+    }
+  }

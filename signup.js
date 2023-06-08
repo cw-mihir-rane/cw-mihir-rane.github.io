@@ -4,7 +4,7 @@ let email = document.querySelector("#email");
 let password = document.querySelector("#password");
 let confirmPassword = document.querySelector("#confirm-password");
 
-//Error messages
+//Error messages p tags
 let usernameError = document.querySelector("#nameError");
 let emailError = document.querySelector("#emailError");
 let passwordError = document.querySelector("#passwordError");
@@ -19,7 +19,6 @@ let submitButton = document.querySelector("#submit-btn");
 let modal = document.querySelector(".modal");
 let modalCloseBtn = document.querySelector(".close-button");
 
-// let isAllFieldsCorrect = true;
 let checkFormStatus = {
     userName : false,
     email: false,
@@ -28,22 +27,13 @@ let checkFormStatus = {
 }
 
 //Helper functions
-
 function hasNumber(str) {
     return /[0-9]/.test(str);
 }
 
 function hasSpecialChar(str) {
-
     for(i = 0; i < str.length; i++){
-        if(str[i] == '!' || 
-            str[i] == '@' || 
-            str[i] == '#' || 
-            str[i] == '$' || 
-            str[i] == '%' || 
-            str[i] == '^' || 
-            str[i] == '&' || 
-            str[i] == '*'
+        if(str[i] == '!' || str[i] == '@' || str[i] == '#' || str[i] == '$' || str[i] == '%' || str[i] == '^' || str[i] == '&' || str[i] == '*'
         ){
             return true;
         }
@@ -53,10 +43,7 @@ function hasSpecialChar(str) {
 }
 
 function AreCheckFormStatusPropstrue(){
-    if(checkFormStatus.userName === true 
-        && checkFormStatus.email === true
-        && checkFormStatus.password === true 
-        && checkFormStatus.confirmPassword === true 
+    if(checkFormStatus.userName === true && checkFormStatus.email === true&& checkFormStatus.password === true && checkFormStatus.confirmPassword === true 
     ){
         return true;
     }else{

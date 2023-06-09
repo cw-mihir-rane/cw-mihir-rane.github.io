@@ -27,6 +27,12 @@ let checkFormStatus = {
 }
 
 //Helper functions
+function updateFieldsBordersAndValidation(field, removeClass, addClass, checkFormStatusField, fieldState){
+    field.classList.remove(removeClass);
+    field.classList.add(addClass);
+    checkFormStatus[checkFormStatusField] = fieldState;
+}
+
 function hasNumber(str) {
     return /[0-9]/.test(str);
 }
@@ -43,6 +49,8 @@ function hasSpecialChar(str) {
 }
 
 function AreCheckFormStatusPropstrue(){
+    console.log(checkFormStatus);
+
     if(checkFormStatus.userName === true && checkFormStatus.email === true&& checkFormStatus.password === true && checkFormStatus.confirmPassword === true 
     ){
         return true;
@@ -66,25 +74,17 @@ function validateUsername(evt){
     usernameError.classList.remove("hide");
 
     if(this.value === ""){
+        updateFieldsBordersAndValidation(this, "correct-border", "wrong-border", "userName", false);
         usernameError.innerText = "Username cannot be blank";
-        this.classList.remove("correct-border");
-        this.classList.add("wrong-border");
-        checkFormStatus.userName = false;
     }else if(this.value.length < 3){
+        updateFieldsBordersAndValidation(this, "correct-border", "wrong-border", "userName", false);
         usernameError.innerText = "Username must have atleast 3 characters";
-        this.classList.remove("correct-border");
-        this.classList.add("wrong-border");
-        checkFormStatus.userName = false;
     }else if(this.value.length > 25){
+        updateFieldsBordersAndValidation(this, "correct-border", "wrong-border", "userName", false);
         usernameError.innerText = "Username cannot exceed 25 characters";
-        this.classList.remove("correct-border");
-        this.classList.add("wrong-border");
-        checkFormStatus.userName = false;
     }else{
+        updateFieldsBordersAndValidation(this, "wrong-border", "correct-border", "userName", true);
         usernameError.classList.add("hide");
-        this.classList.add("correct-border");
-        this.classList.remove("wrong-border");
-        checkFormStatus.userName = true;
     }
 
     enableDisableBtn();
@@ -96,15 +96,11 @@ function validateEmail(evt){
     let regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
 
     if(regex.test(this.value) === false){
+        updateFieldsBordersAndValidation(this, "correct-border", "wrong-border", "email", false);
         emailError.innerText = "Enter valid address";
-        this.classList.remove("correct-border");
-        this.classList.add("wrong-border");
-        checkFormStatus.email = false;
     }else{
+        updateFieldsBordersAndValidation(this, "wrong-border", "correct-border", "email", true);
         emailError.classList.add("hide");
-        this.classList.add("correct-border");
-        this.classList.remove("wrong-border");
-        checkFormStatus.email = true;
     }
 
     enableDisableBtn();
@@ -114,37 +110,25 @@ function validatePassword(evt){
     passwordError.classList.remove("hide");
 
     if(this.value.length < 8){
+        updateFieldsBordersAndValidation(this, "correct-border", "wrong-border", "password", false);
         passwordError.innerText = "Password must have atleast 8 characters";
-        this.classList.remove("correct-border");
-        this.classList.add("wrong-border");
-        checkFormStatus.password = false;
     }
     else if(!(this.value.toUpperCase() != this.value)){
+        updateFieldsBordersAndValidation(this, "correct-border", "wrong-border", "password", false);
         passwordError.innerText = "Password must have atleast one lowercase character";
-        this.classList.remove("correct-border");
-        this.classList.add("wrong-border");
-        checkFormStatus.password = false;
     }else if(!(this.value.toLowerCase() != this.value)){
+        updateFieldsBordersAndValidation(this, "correct-border", "wrong-border", "password", false);
         passwordError.innerText = "Password must have atleast one uppercase character";
-        this.classList.remove("correct-border");
-        this.classList.add("wrong-border");
-        checkFormStatus.password = false;
     }else if(!hasNumber(this.value)){
+        updateFieldsBordersAndValidation(this, "correct-border", "wrong-border", "password", false);
         passwordError.innerText = "Password must have atleast one number";
-        this.classList.remove("correct-border");
-        this.classList.add("wrong-border");
-        checkFormStatus.password = false;
     }
     else if(!hasSpecialChar(this.value)){
+        updateFieldsBordersAndValidation(this, "correct-border", "wrong-border", "password", false);
         passwordError.innerText = "Password must have atleast one special character from the set (!@#$%^&*)";
-        this.classList.remove("correct-border");
-        this.classList.add("wrong-border");
-        checkFormStatus.password = false;
     }else{
         passwordError.classList.add("hide");
-        this.classList.add("correct-border");
-        this.classList.remove("wrong-border");
-        checkFormStatus.password = true;
+        updateFieldsBordersAndValidation(this, "wrong-border", "correct-border", "password", true);
     }
 
     enableDisableBtn();
@@ -154,15 +138,11 @@ function validateConfirmPassword(evt){
     confirmPasswordError.classList.remove("hide");
 
     if(this.value !== password.value){
+        updateFieldsBordersAndValidation(this, "correct-border", "wrong-border", "confirmPassword", false);
         confirmPasswordError.innerText = "Confirm Password must match the previous password";
-        this.classList.remove("correct-border");
-        this.classList.add("wrong-border");
-        checkFormStatus.confirmPassword = false;
     }else{
         confirmPasswordError.classList.add("hide");
-        this.classList.add("correct-border");
-        this.classList.remove("wrong-border");
-        checkFormStatus.confirmPassword = true;
+        updateFieldsBordersAndValidation(this, "wrong-border", "correct-border", "confirmPassword", true);
     }
 
     enableDisableBtn();
@@ -183,10 +163,8 @@ email.addEventListener('input', validateEmail);
 password.addEventListener('input', validatePassword);
 confirmPassword.addEventListener('input', validateConfirmPassword);
 
-
 togglePasswordIcon.addEventListener("click", () => {togglePassword(password, togglePasswordIcon)});
 toggleConfirmPasswordIcon.addEventListener("click",() => {togglePassword(confirmPassword, toggleConfirmPasswordIcon)});
-
 
 submitButton.addEventListener("click", function(e){
     e.preventDefault();
